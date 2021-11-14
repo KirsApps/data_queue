@@ -4,26 +4,25 @@ import 'commands.dart';
 import 'data_queue.dart';
 
 class QueueWorker<TEvent> {
-  QueueWorker(this.executorQueue);
+  QueueWorker(this.dataQueue);
   @protected
-  final DataQueue<TEvent> executorQueue;
+  final DataQueue<TEvent> dataQueue;
 
-  Future<List<TEvent>> get all =>
-      executorQueue.execute<List<TEvent>>(AllCommand());
+  Future<List<TEvent>> get all => dataQueue.execute<List<TEvent>>(AllCommand());
 
-  Future<TEvent> get clone => executorQueue.execute<TEvent>(CloneCommand());
+  Future<TEvent> get clone => dataQueue.execute<TEvent>(CloneCommand());
 
-  Future<int> get enumerate => executorQueue.execute(EnumerateCommand());
+  Future<int> get enumerate => dataQueue.execute(EnumerateCommand());
 
-  Future<TEvent> get next => executorQueue.execute<TEvent>(NextCommand());
+  Future<TEvent> get next => dataQueue.execute<TEvent>(NextCommand());
 
   Future<int> skip(int count) {
     RangeError.checkNotNegative(count, 'count');
-    return executorQueue.execute<int>(SkipCommand(count));
+    return dataQueue.execute<int>(SkipCommand(count));
   }
 
   Future<List<TEvent>> take(int count) {
     RangeError.checkNotNegative(count, 'count');
-    return executorQueue.execute<List<TEvent>>(TakeCommand(count));
+    return dataQueue.execute<List<TEvent>>(TakeCommand(count));
   }
 }
