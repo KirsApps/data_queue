@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 import 'commands.dart';
 
-class ExecutorQueue<TEvent> {
+class DataQueue<TEvent> {
   final _eventQueue = ListQueue<TEvent>();
   final _commandQueue = ListQueue<CommandBase>();
 
@@ -28,30 +28,5 @@ class ExecutorQueue<TEvent> {
       _commandQueue.add(command);
     }
     return command.future;
-  }
-}
-
-class QueueWorker<TEvent> {
-  QueueWorker(this.executorQueue);
-  @protected
-  final ExecutorQueue<TEvent> executorQueue;
-
-  Future<List<TEvent>> get all =>
-      executorQueue.execute<List<TEvent>>(AllCommand());
-
-  Future<TEvent> get clone => executorQueue.execute<TEvent>(CloneCommand());
-
-  Future<int> get enumerate => executorQueue.execute(EnumerateCommand());
-
-  Future<TEvent> get next => executorQueue.execute<TEvent>(NextCommand());
-
-  Future<int> skip(int count) {
-    RangeError.checkNotNegative(count, 'count');
-    return executorQueue.execute<int>(SkipCommand(count));
-  }
-
-  Future<List<TEvent>> take(int count) {
-    RangeError.checkNotNegative(count, 'count');
-    return executorQueue.execute<List<TEvent>>(TakeCommand(count));
   }
 }
