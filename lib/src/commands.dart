@@ -43,19 +43,21 @@ class NextCommand<TEvent> extends CommandBase<TEvent, TEvent> {
   }
 }
 
-/// The command consumes a next [_take] events in a queue.
+/// The command consumes a next [take] events in a queue.
 ///
 /// The returned future will complete when the needed count of events arrives.
 class TakeCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
   final _buffer = <TEvent>[];
-  final int _take;
 
-  /// Creates [TakeCommand] consumes next [_take] events in a queue.
-  TakeCommand(this._take);
+  /// How many events are to consume.
+  final int take;
+
+  /// Creates [TakeCommand] consumes next [take] events in a queue.
+  TakeCommand(this.take);
 
   @override
   bool handle(ListQueue<TEvent> eventQueue) {
-    while (_buffer.length < _take) {
+    while (_buffer.length < take) {
       if (eventQueue.isNotEmpty) {
         _buffer.add(eventQueue.removeFirst());
       } else {
@@ -67,19 +69,20 @@ class TakeCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
   }
 }
 
-/// The command skips a next [_skip] events in a queue.
+/// The command skips a next [skip] events in a queue.
 ///
 /// The returned future will complete when the needed count of events skips.
 class SkipCommand<TEvent> extends CommandBase<TEvent, int> {
-  final int _skip;
+  /// How many events are to skip.
+  final int skip;
   int _skipped = 0;
 
-  /// Creates [SkipCommand] skips next [_skip] events in a queue.
-  SkipCommand(this._skip);
+  /// Creates [SkipCommand] skips next [skip] events in a queue.
+  SkipCommand(this.skip);
 
   @override
   bool handle(ListQueue<TEvent> eventQueue) {
-    while (_skipped < _skip) {
+    while (_skipped < skip) {
       if (eventQueue.isNotEmpty) {
         _skipped++;
         eventQueue.removeFirst();
@@ -87,7 +90,7 @@ class SkipCommand<TEvent> extends CommandBase<TEvent, int> {
         return false;
       }
     }
-    completer.complete(_skip);
+    completer.complete(skip);
     return true;
   }
 }
