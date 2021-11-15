@@ -5,27 +5,43 @@ import 'package:meta/meta.dart';
 
 import 'commands.dart';
 
+/// The class handles an event and a command queue.
+///
+/// Events manipulating available with [CommandBase] commands.
 class DataQueue<TEvent> {
-  final _eventQueue = ListQueue<TEvent>();
-  final _commandQueue = ListQueue<CommandBase>();
+  /// Events queue
+  final _eventsQueue = ListQueue<TEvent>();
 
+  /// Commands queue
+  final _commandsQueue = ListQueue<CommandBase>();
+
+  /// Adds event to event queue.
   @mustCallSuper
   void add(TEvent event) {
-    _eventQueue.add(event);
-    while (_commandQueue.isNotEmpty) {
-      if (_commandQueue.first.handle(_eventQueue)) {
-        _commandQueue.removeFirst();
+    _eventsQueue.add(event);
+    while (_commandsQueue.isNotEmpty) {
+      if (_commandsQueue.first.handle(_eventsQueue)) {
+        _commandsQueue.removeFirst();
       } else {
         return;
       }
     }
   }
 
+  /// Adds all events to the events queue in iteration order.
+  @mustCallSuper
+  void addAll(List<TEvent> events) {
+    for (TEvent event in events) {
+      add(event);
+    }
+  }
+
+  /// Add command to the commands queue.
   @mustCallSuper
   Future<TResult> execute<TResult>(CommandBase<TEvent, TResult> command) {
-    if (_commandQueue.isNotEmpty ||
-        _commandQueue.isEmpty && !command.handle(_eventQueue)) {
-      _commandQueue.add(command);
+    if (_commandsQueue.isNotEmpty ||
+        _commandsQueue.isEmpty && !command.handle(_eventsQueue)) {
+      _commandsQueue.add(command);
     }
     return command.future;
   }
