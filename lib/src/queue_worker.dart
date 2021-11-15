@@ -8,6 +8,12 @@ class QueueWorker<TEvent> {
   /// Creates [QueueWorker] handles the [dataQueue] with built-in commands.
   QueueWorker(this.dataQueue);
 
+  /// Adds the [event] to the events queue.
+  void add(TEvent event) => dataQueue.add(event);
+
+  /// Adds all [events] to the events queue in iteration order.
+  void addAll(List<TEvent> events) => dataQueue.addAll(events);
+
   /// The Data queue
   @protected
   final DataQueue<TEvent> dataQueue;
