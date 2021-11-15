@@ -3,13 +3,34 @@ import 'dart:collection';
 
 import 'package:meta/meta.dart';
 
+/// Abstract command class that receives events
 abstract class CommandBase<TEvent, TResult> {
+  /// Completer manipulates the future returned by [future].
   @protected
   final completer = Completer<TResult>();
+
+  /// Returns future which will complete when the command conditions are met.
   Future<TResult> get future => completer.future;
+
+  /// Handle available events.
+  ///
+  /// Returns `true` if the command is completed, or `false` if it needs
+  /// more events.
+  ///
+  /// If the method returns true, command will never be called again.
+  ///
+  /// This method is called when a command reaches the front of the command
+  /// queue, and if it returns `false`, it's called again every time a new event
+  /// becomes available.
   bool handle(ListQueue<TEvent> eventQueue);
 }
 
+/// The command consumes a next event in a queue.
+///
+/// The returned future will be complete when the requested event arrives.
+///
+/// If several [NextCommand] commands are registered,
+/// they will be complete in the order they request.
 class NextCommand<TEvent> extends CommandBase<TEvent, TEvent> {
   @override
   bool handle(ListQueue<TEvent> eventQueue) {
@@ -22,9 +43,14 @@ class NextCommand<TEvent> extends CommandBase<TEvent, TEvent> {
   }
 }
 
+/// The command consumes a next [_take] events in a queue.
+///
+/// The returned future will complete when the needed count of events arrives.
 class TakeCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
   final _buffer = <TEvent>[];
   final int _take;
+
+  /// Creates [TakeCommand] consumes next [_take] events in a queue.
   TakeCommand(this._take);
 
   @override
@@ -41,9 +67,14 @@ class TakeCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
   }
 }
 
+/// The command skips a next [_skip] events in a queue.
+///
+/// The returned future will complete when the needed count of events skips.
 class SkipCommand<TEvent> extends CommandBase<TEvent, int> {
   final int _skip;
   int _skipped = 0;
+
+  /// Creates [SkipCommand] skips next [_skip] events in a queue.
   SkipCommand(this._skip);
 
   @override
@@ -61,7 +92,11 @@ class SkipCommand<TEvent> extends CommandBase<TEvent, int> {
   }
 }
 
+/// The command enumerates all events in a queue.
+///
+/// The returned future will be complete with an event count in a queue.
 class EnumerateCommand<TEvent> extends CommandBase<TEvent, int> {
+  /// Creates [EnumerateCommand] to enumerate all events in a queue.
   EnumerateCommand();
 
   @override
@@ -71,7 +106,9 @@ class EnumerateCommand<TEvent> extends CommandBase<TEvent, int> {
   }
 }
 
+/// The command takes an event in a queue without consuming it.
 class CloneCommand<TEvent> extends CommandBase<TEvent, TEvent> {
+  /// Creates [CloneCommand] takes an event in a queue without consuming it.
   CloneCommand();
 
   @override
@@ -85,7 +122,9 @@ class CloneCommand<TEvent> extends CommandBase<TEvent, TEvent> {
   }
 }
 
+/// The command takes all events from a queue.
 class AllCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
+  /// Creates [AllCommand] takes all events from a queue.
   AllCommand();
 
   @override
