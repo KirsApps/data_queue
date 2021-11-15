@@ -133,6 +133,7 @@ class AllCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
   @override
   bool handle(ListQueue<TEvent> eventQueue) {
     completer.complete(eventQueue.toList(growable: false));
+    eventQueue.clear();
     return true;
   }
 }
