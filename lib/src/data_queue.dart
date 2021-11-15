@@ -5,17 +5,17 @@ import 'package:meta/meta.dart';
 
 import 'commands.dart';
 
-/// The class handles an event and a command queue.
+/// The class handles event and command queues.
 ///
 /// Events manipulating available with [CommandBase] commands.
 class DataQueue<TEvent> {
-  /// Events queue
+  /// The events queue
   final _eventsQueue = ListQueue<TEvent>();
 
-  /// Commands queue
+  /// The commands queue
   final _commandsQueue = ListQueue<CommandBase>();
 
-  /// Adds event to event queue.
+  /// Adds the [event] to the events queue.
   @mustCallSuper
   void add(TEvent event) {
     _eventsQueue.add(event);
@@ -28,7 +28,7 @@ class DataQueue<TEvent> {
     }
   }
 
-  /// Adds all events to the events queue in iteration order.
+  /// Adds all [events] to the events queue in iteration order.
   @mustCallSuper
   void addAll(List<TEvent> events) {
     for (TEvent event in events) {
