@@ -5,7 +5,8 @@ void main() {
   final worker = QueueWorker(DataQueue<String>());
 
   test('EnumerateCommand', () async {
-    worker.addAll(['test', 'test2']);
+    worker.add('test');
+    worker.add('test2');
     final count = await worker.enumerate;
     expect(count, equals(2));
   });
@@ -41,5 +42,16 @@ void main() {
     final count = await worker.enumerate;
     expect(take, equals(['1', '2', '3']));
     expect(count, equals(0));
+  });
+  test('Several commands', () async {
+    final result = await Future.wait([
+      Future.delayed(Duration(milliseconds: 300), () {
+        worker.addAll(['1', '2', '3']);
+      }),
+      worker.take(3),
+      worker.enumerate
+    ]);
+    expect(result[1], equals(['1', '2', '3']));
+    expect(result[2], equals(0));
   });
 }
