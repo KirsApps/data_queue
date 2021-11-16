@@ -45,7 +45,7 @@ void main() {
   });
   test('Several commands', () async {
     final result = await Future.wait([
-      Future.delayed(Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 300), () {
         worker.addAll(['1', '2', '3']);
       }),
       worker.take(3),
@@ -56,13 +56,14 @@ void main() {
   });
   test('Terminate', () async {
     expect(
-        () async => await Future.wait([
-              Future.delayed(Duration(milliseconds: 300), () {
-                worker.terminate();
-              }),
-              worker.take(3),
-              worker.enumerate
-            ]),
-        throwsA(isA<TerminatedException>()));
+      () async => Future.wait([
+        Future.delayed(const Duration(milliseconds: 300), () {
+          worker.terminate();
+        }),
+        worker.take(3),
+        worker.enumerate
+      ]),
+      throwsA(isA<TerminatedException>()),
+    );
   });
 }

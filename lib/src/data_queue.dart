@@ -43,7 +43,7 @@ class DataQueue<TEvent> {
   /// Adds all [events] to the events queue in iteration order.
   @mustCallSuper
   void addAll(List<TEvent> events) {
-    for (TEvent event in events) {
+    for (final event in events) {
       add(event);
     }
   }
