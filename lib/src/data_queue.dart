@@ -5,6 +5,18 @@ import 'package:meta/meta.dart';
 
 import 'commands.dart';
 
+/// The exception indicates that a future was terminated
+/// by calling [DataQueue.terminate].
+class TerminatedException implements Exception {
+  /// Creates exception that indicates that a future was terminated.
+  /// by calling [DataQueue.terminate]
+  TerminatedException();
+
+  @override
+  String toString() =>
+      'The future terminated by calling the DataQueue.terminate';
+}
+
 /// The class handles event and command queues.
 ///
 /// Events manipulating available with [CommandBase] commands.
@@ -33,6 +45,13 @@ class DataQueue<TEvent> {
   void addAll(List<TEvent> events) {
     for (TEvent event in events) {
       add(event);
+    }
+
+    /// Terminates all commands by throwing [TerminateException].
+    void terminate() {
+      for (final command in _commandsQueue) {
+        command.terminate();
+      }
     }
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:collection';
 
+import 'package:data_queue/data_queue.dart';
 import 'package:meta/meta.dart';
 
 /// Abstract command class that receives events
@@ -23,6 +24,11 @@ abstract class CommandBase<TEvent, TResult> {
   /// queue, and if it returns `false`, it's called again every time a new event
   /// becomes available.
   bool handle(ListQueue<TEvent> eventQueue);
+
+  /// Terminates this command by throwing the [TerminateException].
+  ///
+  /// [DataQueue.terminate] calls this method for each command in the queue.
+  void terminate() => completer.completeError(TerminatedException());
 }
 
 /// The command consumes a next event in a queue.
