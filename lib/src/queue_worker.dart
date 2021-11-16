@@ -14,6 +14,9 @@ class QueueWorker<TEvent> {
   /// Adds all [events] to the events queue in iteration order.
   void addAll(List<TEvent> events) => dataQueue.addAll(events);
 
+  /// Terminates all commands by throwing [TerminateException].
+  void terminate() => dataQueue.terminate();
+
   /// The Data queue
   @protected
   final DataQueue<TEvent> dataQueue;

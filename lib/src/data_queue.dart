@@ -46,13 +46,6 @@ class DataQueue<TEvent> {
     for (TEvent event in events) {
       add(event);
     }
-
-    /// Terminates all commands by throwing [TerminateException].
-    void terminate() {
-      for (final command in _commandsQueue) {
-        command.terminate();
-      }
-    }
   }
 
   /// Add command to the commands queue.
@@ -63,5 +56,12 @@ class DataQueue<TEvent> {
       _commandsQueue.add(command);
     }
     return command.future;
+  }
+
+  /// Terminates all commands by throwing [TerminateException].
+  void terminate() {
+    for (final command in _commandsQueue) {
+      command.terminate();
+    }
   }
 }
