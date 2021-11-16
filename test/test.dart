@@ -54,4 +54,15 @@ void main() {
     expect(result[1], equals(['1', '2', '3']));
     expect(result[2], equals(0));
   });
+  test('Terminate', () async {
+    expect(
+        () async => await Future.wait([
+              Future.delayed(Duration(milliseconds: 300), () {
+                worker.terminate();
+              }),
+              worker.take(3),
+              worker.enumerate
+            ]),
+        throwsA(isA<TerminatedException>()));
+  });
 }
