@@ -66,4 +66,10 @@ void main() {
       throwsA(isA<TerminatedException>()),
     );
   });
+  test('TerminatedException', () async {
+    expect(
+      TerminatedException().toString(),
+      equals('The future terminated by calling the DataQueue.terminate'),
+    );
+  });
 }
