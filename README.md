@@ -1,4 +1,4 @@
-[![codecov](https://codecov.io/gh/KirsApps/data_queue/branch/master/graph/badge.svg)](https://github.com/KirsApps/data_queue)
+[![codecov](https://codecov.io/gh/KirsApps/data_queue/branch/master/graph/badge.svg)](https://codecov.io/gh/KirsApps/data_queue)
 [![Build Status](https://github.com/KirsApps/data_queue/workflows/build/badge.svg)](https://github.com/KirsApps/data_queue/actions?query=workflow%3A"build"+branch%3Amaster)
 [![pub](https://img.shields.io/pub/v/data_queue.svg)](https://pub.dev/packages/data_queue)
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
