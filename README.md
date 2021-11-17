@@ -40,22 +40,11 @@ You can read available list of commands in Commands section.
 
 All commands are based on the CommandBase interface. 
 You can create your commands, just extends this class and write the handle method.
+
 Available commands:
 * NextCommand - The command consumes a next event in a queue.
 * TakeCommand - The command consumes the next [take] events in a queue.
 * SkipCommand - The command skips the next [skip] events in a queue.
-* EnumerateCommand - The command enumerates all events in a queue.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
-```
+* CountCommand - The command counts all events in a queue.
+* CloneCommand - The command takes an event in a queue without consuming it.
+* AllCommand - The command takes all events from a queue.
