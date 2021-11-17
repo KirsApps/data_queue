@@ -1,5 +1,5 @@
 name: data_queue
-description: A starting point for Dart libraries or applications.
+description: This package provides the DataQueue - an asynchronous pull-based class for accessing data.
 version: 1.0.0
 homepage: https://github.com/KirsApps/data_queue
 

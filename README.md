@@ -3,12 +3,48 @@
 [![pub](https://img.shields.io/pub/v/data_queue.svg)](https://pub.dev/packages/data_queue)
 [![style: lint](https://img.shields.io/badge/style-lint-4BC0F5.svg)](https://pub.dev/packages/lint)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+Asynchronous pull-based class for accessing data
 
-## Features
+## DataQueue
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+This class is the main for building data access functionality. It manages eventsQueue (added data) and commandsQueue (added commands).
+You can add data with add and addAll methods. Data access is available with commands passed to the execute method.
+
+Basic usage:
+
+```dart
+final dataQueue = DataQueue<String>();
+dataQueue.add('test'); // In the dataQueue now one event - 'test'.
+final next = await dataQueue.execute(NextCommand()); // result = test
+```
+
+## QueueWorker
+
+The QueueWorker class provides commands and a more simple way to data manipulating than DataQueue.
+Basic usage:
+
+```dart
+final worker = QueueWorker(DataQueue<String>());
+worker.add('test'); // In the eventQueue now one event - 'test'.
+worker.addAll([
+'test2',
+'test3'
+]); // In the eventQueue now three events - 'test', 'test2', 'test3'.
+final next = await worker.next; // result = test
+final take = await worker.take(2); // take = 'test2', 'test3'
+final count = await worker.enumerate; // count = 0, eventQueue is empty.
+```
+You can read available list of commands in Commands section.
+
+## Commands
+
+All commands are based on the CommandBase interface. 
+You can create your commands, just extends this class and write the handle method.
+Available commands:
+* NextCommand - The command consumes a next event in a queue.
+* TakeCommand - The command consumes the next [take] events in a queue.
+* SkipCommand - The command skips the next [skip] events in a queue.
+* EnumerateCommand - The command enumerates all events in a queue.
 
 ## Getting started
 
@@ -23,9 +59,3 @@ to `/example` folder.
 ```dart
 const like = 'sample';
 ```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
