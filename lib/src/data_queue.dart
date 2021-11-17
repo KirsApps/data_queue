@@ -8,7 +8,7 @@ import 'commands.dart';
 /// The exception indicates that a future was terminated
 /// by calling [DataQueue.terminate].
 class TerminatedException implements Exception {
-  /// Creates exception that indicates that a future was terminated.
+  /// Creates exception that indicates a future was terminated,
   /// by calling [DataQueue.terminate]
   TerminatedException();
 
@@ -48,7 +48,7 @@ class DataQueue<TEvent> {
     }
   }
 
-  /// Add command to the commands queue.
+  /// Adds the command to the commands queue.
   @mustCallSuper
   Future<TResult> execute<TResult>(CommandBase<TEvent, TResult> command) {
     if (_commandsQueue.isNotEmpty ||

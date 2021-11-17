@@ -6,11 +6,11 @@ import 'package:meta/meta.dart';
 
 /// Abstract command class that receives events
 abstract class CommandBase<TEvent, TResult> {
-  /// Completer manipulates the future returned by [future].
+  /// The completer manipulates the future returned by [future].
   @protected
   final completer = Completer<TResult>();
 
-  /// Returns future which will complete when the command conditions are met.
+  /// Returns the future, which will be complete when the command conditions are met.
   Future<TResult> get future => completer.future;
 
   /// Handle available events.
@@ -36,7 +36,7 @@ abstract class CommandBase<TEvent, TResult> {
 /// The returned future will be complete when a requested event arrives.
 ///
 /// If several [NextCommand] commands are registered,
-/// they will be complete in the order they request.
+/// they will complete in the requested order.
 class NextCommand<TEvent> extends CommandBase<TEvent, TEvent> {
   @override
   bool handle(ListQueue<TEvent> eventQueue) {
