@@ -9,5 +9,5 @@ Future<void> main() async {
   ]); // In the eventQueue now three events - 'test', 'test2', 'test3'.
   final next = await worker.next; // result = test
   final take = await worker.take(2); // take = 'test2', 'test3'
-  final count = await worker.enumerate; // count = 0, eventQueue is empty.
+  final count = await worker.count; // count = 0, eventQueue is empty.
 }

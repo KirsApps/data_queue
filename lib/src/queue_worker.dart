@@ -27,8 +27,8 @@ class QueueWorker<TEvent> {
   /// Returns an event from the [dataQueue] without consuming it.
   Future<TEvent> get clone => dataQueue.execute<TEvent>(CloneCommand());
 
-  /// Returns events count in the [dataQueue].
-  Future<int> get enumerate => dataQueue.execute(EnumerateCommand());
+  /// Returns an event count in the [dataQueue].
+  Future<int> get count => dataQueue.execute(CountCommand());
 
   /// Returns next event in the [dataQueue].
   Future<TEvent> get next => dataQueue.execute<TEvent>(NextCommand());

@@ -101,12 +101,12 @@ class SkipCommand<TEvent> extends CommandBase<TEvent, int> {
   }
 }
 
-/// The command enumerates all events in a queue.
+/// The command counts all events in a queue.
 ///
 /// The returned future will be complete with an event count in a queue.
-class EnumerateCommand<TEvent> extends CommandBase<TEvent, int> {
-  /// Creates [EnumerateCommand] that enumerates all events in a queue.
-  EnumerateCommand();
+class CountCommand<TEvent> extends CommandBase<TEvent, int> {
+  /// Creates [CountCommand] that counts all events in a queue.
+  CountCommand();
 
   @override
   bool handle(ListQueue<TEvent> eventQueue) {
