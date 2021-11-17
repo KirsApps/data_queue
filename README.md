@@ -32,14 +32,13 @@ worker.addAll([
 ]); // In the eventQueue now three events - 'test', 'test2', 'test3'.
 final next = await worker.next; // result = test
 final take = await worker.take(2); // take = 'test2', 'test3'
-final count = await worker.enumerate; // count = 0, eventQueue is empty.
+final count = await worker.enumerate; // count = 0, the eventQueue is empty.
 ```
-You can read available list of commands in Commands section.
 
 ## Commands
 
-All commands are based on the CommandBase interface. 
-You can create your commands, just extends this class and write the handle method.
+All commands are based on the CommandBase interface.
+You can create your commands. Extend this class, and write the handle method.
 
 Available commands:
 * NextCommand - The command consumes a next event in a queue.
