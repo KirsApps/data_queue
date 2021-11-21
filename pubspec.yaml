@@ -1,6 +1,6 @@
 name: data_queue
 description: This package provides the DataQueue - an asynchronous pull-based class for accessing data.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/KirsApps/data_queue
 
 environment:
