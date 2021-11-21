@@ -8,7 +8,7 @@ import 'commands.dart';
 /// The exception indicates that a future was terminated
 /// by calling [DataQueue.terminate].
 class TerminatedException implements Exception {
-  /// Creates exception that indicates a future was terminated,
+  /// Creates exception that indicates a future was terminated
   /// by calling [DataQueue.terminate]
   TerminatedException();
 

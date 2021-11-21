@@ -5,6 +5,10 @@ import 'data_queue.dart';
 
 /// The class handles the [dataQueue] with built-in commands.
 class QueueWorker<TEvent> {
+  /// The Data queue
+  @protected
+  final DataQueue<TEvent> dataQueue;
+
   /// Creates [QueueWorker] handles the [dataQueue] with built-in commands.
   QueueWorker(this.dataQueue);
 
@@ -16,10 +20,6 @@ class QueueWorker<TEvent> {
 
   /// Terminates all commands by throwing the [TerminateException].
   void terminate() => dataQueue.terminate();
-
-  /// The Data queue
-  @protected
-  final DataQueue<TEvent> dataQueue;
 
   /// Returns all events from the [dataQueue].
   Future<List<TEvent>> get all => dataQueue.execute<List<TEvent>>(AllCommand());
