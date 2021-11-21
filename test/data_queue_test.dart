@@ -72,4 +72,15 @@ void main() {
       equals('The future terminated by calling the DataQueue.terminate'),
     );
   });
+  test('terminate', () async {
+    expect(() => worker.next, throwsA(isA<TerminatedException>()));
+    expect(() => worker.count, throwsA(isA<TerminatedException>()));
+    worker.terminate();
+    worker.add('after');
+    worker.add('terminate');
+    final after = await worker.next;
+    final terminate = await worker.next;
+    expect(after, equals('after'));
+    expect(terminate, equals('terminate'));
+  });
 }

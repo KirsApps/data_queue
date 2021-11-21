@@ -60,7 +60,9 @@ class DataQueue<TEvent> {
 
   /// Terminates all commands by throwing [TerminateException].
   void terminate() {
-    for (final command in _commandsQueue) {
+    final commands = ListQueue.from(_commandsQueue);
+    _commandsQueue.clear();
+    for (final command in commands) {
       command.terminate();
     }
   }
