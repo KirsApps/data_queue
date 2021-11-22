@@ -47,3 +47,8 @@ Available commands:
 * CountCommand - The command counts all events in a queue.
 * CloneCommand - The command takes an event in a queue without consuming it.
 * AllCommand - The command takes all events from a queue.
+
+## Termination
+
+You can terminate the execution of commands by the terminate method call. All commands in the queue will be complete with TerminatedException. The TerminatedException contains a command and optional command data.
+
