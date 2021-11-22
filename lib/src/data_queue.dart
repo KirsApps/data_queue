@@ -32,6 +32,14 @@ class DataQueue<TEvent> {
   /// The commands queue
   final _commandsQueue = ListQueue<CommandBase>();
 
+  /// Creates the [DataQueue] that handles event and command queues.
+  DataQueue();
+
+  /// Creates the [DataQueue] that contains the [events] as initial data.
+  DataQueue.withData(List<TEvent> events) {
+    _eventsQueue.addAll(events);
+  }
+
   /// Adds the [event] to the events queue.
   @mustCallSuper
   void add(TEvent event) {

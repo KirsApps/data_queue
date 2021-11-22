@@ -97,4 +97,14 @@ void main() {
     );
     worker.terminate();
   });
+  test('withData constructor', () async {
+    final worker =
+        QueueWorker(DataQueue<String>.withData(['one', 'two', 'three']));
+    final one = await worker.next;
+    expect(one, equals('one'));
+    final two = await worker.next;
+    expect(two, equals('two'));
+    final three = await worker.next;
+    expect(three, equals('three'));
+  });
 }
