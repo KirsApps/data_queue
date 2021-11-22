@@ -7,11 +7,16 @@ import 'commands.dart';
 
 /// The exception indicates that a future was terminated
 /// by calling [DataQueue.terminate].
-class TerminatedException implements Exception {
+class TerminatedException<T> implements Exception {
   /// Creates exception that indicates a future was terminated
   /// by calling [DataQueue.terminate]
-  TerminatedException();
+  TerminatedException(this.command, {this.data});
 
+  /// The terminated command.
+  final CommandBase command;
+
+  /// The optional command data.
+  final T? data;
   @override
   String toString() =>
       'The future terminated by calling the DataQueue.terminate';

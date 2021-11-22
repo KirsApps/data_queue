@@ -68,7 +68,7 @@ void main() {
   });
   test('TerminatedException', () async {
     expect(
-      TerminatedException().toString(),
+      TerminatedException(NextCommand()).toString(),
       equals('The future terminated by calling the DataQueue.terminate'),
     );
   });
@@ -82,5 +82,19 @@ void main() {
     final terminate = await worker.next;
     expect(after, equals('after'));
     expect(terminate, equals('terminate'));
+  });
+  test('terminate take command', () async {
+    worker.addAll(['one', 'two', 'three']);
+    expect(
+      () => worker.take(6),
+      throwsA(
+        isA<TerminatedException>().having(
+          (error) => error.data,
+          'data',
+          ['one', 'two', 'three'],
+        ),
+      ),
+    );
+    worker.terminate();
   });
 }

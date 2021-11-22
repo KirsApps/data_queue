@@ -28,7 +28,8 @@ abstract class CommandBase<TEvent, TResult> {
   /// Terminates this command by throwing the [TerminateException].
   ///
   /// [DataQueue.terminate] calls this method for each command in the queue.
-  void terminate() => completer.completeError(TerminatedException());
+  void terminate() =>
+      completer.completeError(TerminatedException<TResult>(this));
 }
 
 /// The command consumes a next event in a queue.
@@ -73,6 +74,11 @@ class TakeCommand<TEvent> extends CommandBase<TEvent, List<TEvent>> {
     completer.complete(_buffer);
     return true;
   }
+
+  /// Completes the future with the [TerminatedException] that contains the [_buffer] as data.
+  @override
+  void terminate() => completer
+      .completeError(TerminatedException<List<TEvent>>(this, data: _buffer));
 }
 
 /// The command skips the next [skip] events in a queue.
